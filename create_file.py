@@ -1,4 +1,6 @@
 import csv
+import plotly.express as px
+import pandas as pd
 
 
 def create_csv(file_name, mode, columns, rows):
@@ -17,4 +19,11 @@ def create_csv(file_name, mode, columns, rows):
             writer.writerow(row)
 
     print("The file successfully created")
-    
+
+
+def create_plot(file_name):
+    df = pd.read_csv(file_name)
+    fig = px.bar(df, x="date", y=["min_temp", "max_temp"])
+    fig.write_image("plot.png")
+
+create_plot("data.csv")
