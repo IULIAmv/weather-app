@@ -2,8 +2,9 @@ from _ast import Lambda
 from tkinter import font
 import requests
 import tkinter as tk
+from create_file import create_csv
 
-HEIGHT = 800
+HEIGHT = 900
 WIDTH = 800
 
 
@@ -51,20 +52,21 @@ def format_response_forecast(forecast_weather, string=True):
     max_temp_5 = forecast_weather['data'][4]['max_temp']
     min_temp_5 = forecast_weather['data'][4]['min_temp']
 
-    if string:
-        final_forecast = f"""Forecast for: {city_name}\n
-        Date & time: {date_time_1}\nMax.Temperature: {max_temp_1}°C\nMin.Temperature: {min_temp_1}°C
-        Date & time: {date_time_2}\nMax.Temperature: {max_temp_2}°C\nMin.Temperature: {min_temp_2}°C
-        Date & time: {date_time_3}\nMax.Temperature: {max_temp_3}°C\nMin.Temperature: {min_temp_3}°C
-        Date & time: {date_time_4}\nMax.Temperature: {max_temp_4}°C\nMin.Temperature: {min_temp_4}°C
-        Date & time: {date_time_5}\nMax.Temperature: {max_temp_5}°C\nMin.Temperature: {min_temp_5}°C"""
-        return final_forecast
-
     columns = ["city", "date", "max_temp", "min_temp"]
     rows = [[city_name, date_time_1, max_temp_1, min_temp_1],[city_name, date_time_2, max_temp_2, min_temp_2],
             [city_name, date_time_3, max_temp_3, min_temp_3],[city_name, date_time_4, max_temp_4, min_temp_4],
             [city_name, date_time_5, max_temp_5, min_temp_5]]
-    return columns, rows
+    create_csv("data.csv", "write", columns, rows)
+
+    final_forecast = f"""Forecast for: {city_name}\n
+    Date & time: {date_time_1}\nMax.Temperature: {max_temp_1}°C\nMin.Temperature: {min_temp_1}°C
+    Date & time: {date_time_2}\nMax.Temperature: {max_temp_2}°C\nMin.Temperature: {min_temp_2}°C
+    Date & time: {date_time_3}\nMax.Temperature: {max_temp_3}°C\nMin.Temperature: {min_temp_3}°C
+    Date & time: {date_time_4}\nMax.Temperature: {max_temp_4}°C\nMin.Temperature: {min_temp_4}°C
+    Date & time: {date_time_5}\nMax.Temperature: {max_temp_5}°C\nMin.Temperature: {min_temp_5}°C"""
+    return final_forecast
+
+
 
 
 def get_weather(city):
